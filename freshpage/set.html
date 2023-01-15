@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head onload=upd()>
+      <link rel="shortcut icon"href=img/ico.ico>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- 兼容性视图 -->
+      <meta content="FreshPage Set" name="description">
+      <title>FreshPage Set</title>
+      <style>
+        html {
+              height: 100%;
+            }
+
+        body {
+              background: linear-gradient(180deg, rgba(168, 237, 234, 1) 0%, rgba(254, 214, 227, 1) 100%);
+            }
+
+        .container {
+          height: 100%;
+          width: 20%;
+          background: linear-gradient(180deg, rgba(233, 222, 250, 1) 0%, rgba(165, 214, 63, 1) 100%);
+          border-radius: 31px;
+          box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, 0.25);
+          opacity: 0.9;
+        }
+        .container2 {
+          height: 100%;
+          width: 75%;
+          float:right;
+          margin-top:-270px;
+        }
+        .text{
+        margin:6px;
+        color:transparent;
+        background: linear-gradient(90deg, rgba(102, 126, 234, 1) 0%, rgba(118, 75, 162, 1) 100%);
+        -webkit-background-clip: text;
+        float:left;
+        
+        }
+        .ico{
+        float:left;
+        
+        }
+        .bu{
+          left: 30px;
+          top: 30px;
+          width: 100px;
+          height: 26px;
+          opacity: 0.5;
+          border-radius: 31px;
+          background: linear-gradient(180deg, rgba(233, 222, 250, 1) 0%, rgba(165, 214, 63, 1) 100%);
+          box-shadow: 0px 0px 8px 5px rgba(0, 0, 0, 0.25);
+        }
+
+        .warp {
+                display: inline-block;
+                vertical-align: bottom;
+                position: relative;
+
+            }
+      </style>
+  </head>
+  <body>
+    <div class=container>
+      <h1 class=text>设置</h1>
+      <img src="img/setting.ico" width="50" height="50" class=ico>
+      <br><br><br>
+      <hr>
+      <h2 class=text id=bj>背景</h2>
+      <br><br><br>
+      <h2 class=text id=bb>版本</h2>
+      <br><br><br>
+      <h2 class=text id=gy>关于</h2>
+      <br><br><br>
+      <h2 class=text> </h2>
+    </div>
+    <div class=container2>
+      <h1 class=text id=big>背景</h1>
+      <br><br><br>
+      <div class=warp>
+      <input type="file" id="file" style=visibility: hidden>
+      <img src=img/upload.png id=upload width="500" height="300" onclick=upload()>
+
+      </div>
+      <br><button class=bu onclick=stor() id=qd>确定</button>
+      <br>
+      <canvas id=c></canvas>
+      <h2 class=text> </h2>
+    </div>
+    <script>
+      //setInterval("update()", 5000);
+      var file = document.getElementById('file');
+      var image = document.getElementById('upload');
+      var qd = document.getElementById('qd');
+      var big = document.getElementById('big');
+      file.onchange = function() {
+                var fileData = this.files[0];//获取到一个FileList对象中的第一个文件( File 对象),是我们上传的文件
+                var pettern = /^image/;
+                
+                console.info(fileData.type)
+
+                if (!pettern.test(fileData.type)) {
+                    alert("图片格式不正确");
+                    return;
+                }
+                var reader = new FileReader();
+                reader.readAsDataURL(fileData);//异步读取文件内容，结果用data:url的字符串形式表示
+                /*当读取操作成功完成时调用*/
+                reader.onload = function(e) {
+                        console.log(e); //查看对象
+                    console.log(this.result);//要的数据 这里的this指向FileReader（）对象的实例reader 
+                    image.setAttribute("src", this.result);
+                    /*var imgCanvas = document.createElement("canvas");
+                    //var imgCanvas = getElementById('c')
+                    imgContext = imgCanvas.getContext("2d");
+                    // 确保canvas元素的大小和图片尺寸一致
+                    imgCanvas.width =image.width;
+                    imgCanvas.height = image.height;
+                    
+                    // 渲染图片到canvas中
+                    imgContext.drawImage(image, 0, 0, image.width, image.height);
+                    
+                    // 用data url的形式取出
+                    var imgAsDataURL = imgCanvas.toDataURL("image/png");
+
+                    // 保存到本地存储中
+                    try {
+                    localStorage.setItem("img", "");
+                    localStorage.setItem("img", imgAsDataURL);
+                    update();
+                    //alert("ok")
+                    }
+                    catch (e) {
+                    alert("Storage failed: " + e);
+                }*/
+                }
+
+                }
+      function upload(){
+        file.click();
+      }
+      function update(){
+        
+        image.src=localStorage.getItem("img");
+      }
+
+      function sleep(ms) {
+        let start = Date.now()
+        let end = start + ms
+        while(true) {
+            if(Date.now() > end) {
+                return
+            }   
+          }
+          }
+      function getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        var dataURL = canvas.toDataURL("image/png");
+        return dataURL
+    }
+    function stor(){
+      var imgCanvas = document.createElement("canvas");
+                    //var imgCanvas = getElementById('c')
+                    imgContext = imgCanvas.getContext("2d");
+                    // 确保canvas元素的大小和图片尺寸一致
+                    imgCanvas.width =image.width;
+                    imgCanvas.height = image.height;
+                    
+                    // 渲染图片到canvas中
+                    imgContext.drawImage(image, 0, 0, image.width, image.height);
+                    
+                    // 用data url的形式取出
+                    var imgAsDataURL = imgCanvas.toDataURL("image/png");
+
+                    // 保存到本地存储中
+                    try {
+                    localStorage.clear()
+                    localStorage.setItem("img", imgAsDataURL);
+                    update();
+                    //alert("ok")
+                    }
+                    catch (e) {
+                    alert("Storage failed: " + e);
+                }
+    }
+    function clear(){
+      localStorage.clear();
+    }
+
+    bb.onclick=function (){
+      big.innerHTML='版本<br>V1.0<br>设置上线，可更换背景，正式版本。<br><br>Vbeta<br>测试版本，基础功能上线'
+      image.style.visibility = 'hidden';
+      qd.style.visibility = 'hidden';
+    }
+    bj.onclick=function (){
+      big.innerHTML='背景';
+      image.style.visibility = 'visible';
+      qd.style.visibility = 'visible';
+    }
+    gy.onclick=function (){
+      big.innerHTML='关于<br>本起始页由DDguan独立制作'
+      image.style.visibility = 'hidden';
+      qd.style.visibility = 'hidden';
+    }
+    </script>
+  </body>
+</html>
