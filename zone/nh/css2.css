@@ -1,0 +1,7 @@
+.hr1{ padding:6px 2px;background:#64D4FF;border-bottom:1px solid #000;margin:0 0 5px 0;font-size:20px;}
+.hr2{  padding:5px 2px;background:#64D4FF;border-top:1px solid #000;margin: 5px 0 0 0;}
+body {
+display: block;
+margin: 0px;
+}
+textarea{ width:98%; margin:0px 0 2px 5px;padding:2px 2px;}
