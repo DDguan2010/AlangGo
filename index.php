@@ -1,0 +1,10 @@
+<?php
+error_reporting(0);
+if(file_exists("conn.php"))
+{
+header("location:zone/all_list.php");
+}
+else
+{
+header("location:install.php");
+}
